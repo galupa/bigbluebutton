@@ -107,6 +107,11 @@ class UserContent extends PureComponent {
             requestUserInformation,
           }}
         />
+        {currentUser.role === ROLE_MODERATOR
+          ? (
+            <p role="alert">You are moderator</p>
+          ) : <p role="alert">You are not moderator</p>
+        }
       </div>
     );
   }
