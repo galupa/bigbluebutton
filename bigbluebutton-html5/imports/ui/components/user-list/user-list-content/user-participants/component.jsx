@@ -187,7 +187,7 @@ class UserParticipants extends Component {
           tabIndex={0}
           ref={(ref) => { this.refScrollContainer = ref; }}
         >
-          <div className={styles.list}>
+          <div className={styles.list} role='alert'>
             <TransitionGroup ref={(ref) => { this.refScrollItems = ref; }}>
               {this.getUsers()}
             </TransitionGroup>
