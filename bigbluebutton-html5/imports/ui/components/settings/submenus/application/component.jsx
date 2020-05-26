@@ -34,6 +34,10 @@ const intlMessages = defineMessages({
     id: 'app.submenu.application.userJoinPushAlertLabel',
     description: 'push notification when a user joins',
   },
+  userRoleChangesPushAlertLabel: {
+    id: 'app.submenu.application.userRoleChangesPushAlertLabel',
+    description: 'push notification when a user change role',
+  },
   fontSizeControlLabel: {
     id: 'app.submenu.application.fontSizeControlLabel',
     description: 'label for font size ontrol',
@@ -283,6 +287,26 @@ class ApplicationMenu extends BaseMenu {
                   defaultChecked={this.state.settings.userJoinPushAlerts}
                   onChange={() => this.handleToggle('userJoinPushAlerts')}
                   ariaLabel={intl.formatMessage(intlMessages.userJoinPushAlertLabel)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.col} aria-hidden="true">
+              <div className={styles.formElement}>
+                <label className={styles.label}>
+                  {intl.formatMessage(intlMessages.userRoleChangesPushAlertLabel)}
+                </label>
+              </div>
+            </div>
+            <div className={styles.col}>
+              <div className={cx(styles.formElement, styles.pullContentRight)}>
+                <Toggle
+                  icons={false}
+                  defaultChecked={this.state.settings.userRoleChangesPushAlerts}
+                  onChange={() => this.handleToggle('userRoleChangesPushAlerts')}
+                  ariaLabel={intl.formatMessage(intlMessages.userRoleChangesPushAlertLabel)}
                 />
               </div>
             </div>

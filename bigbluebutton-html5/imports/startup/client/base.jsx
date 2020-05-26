@@ -265,6 +265,7 @@ const BaseContainer = withTracker(() => {
 
   const approved = User && User.approved && User.guest;
   const ejected = User && User.ejected;
+  const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
   let userSubscriptionHandler;
 
   Breakouts.find({}, { fields: { _id: 1 } }).observeChanges({
@@ -353,6 +354,32 @@ const BaseContainer = withTracker(() => {
       },
     });
   }
+
+  Users.find({ userId: localUserId }, { fields: { role: 1 } }).observe({
+    changed: (newDocument, oldDocument) => {
+      if (newDocument.role !== oldDocument.role) {
+        if (newDocument.role === ROLE_MODERATOR) {
+          notify(
+            <FormattedMessage
+                id="app.notification.userPromotedPushAlert"
+                description="Notification for a user promoted to moderator"
+              />,
+            'info',
+            'user',
+          );
+        } else {
+          notify(
+            <FormattedMessage
+                id="app.notification.userDemotedPushAlert"
+                description="Notification for a user demoted to viewer"
+              />,
+            'info',
+            'user',
+          );
+        }
+      }
+    },
+  });
 
   if (getFromUserSettings('bbb_show_participants_on_login', true) && !deviceInfo.type().isPhone) {
     Session.set('openPanel', 'userlist');
