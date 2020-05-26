@@ -363,6 +363,26 @@ const BaseContainer = withTracker(() => {
       },
     });
   }
+  const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
+  Users.find({ userId: localUserId }, { fields: { role: 1 } }).observe({
+    changed: (newDocument, oldDocument) => {
+      if (newDocument.role !== oldDocument.role) {
+        if (newDocument.role === ROLE_MODERATOR) {
+          notify(
+            'You have been promoted to moderator',
+            'info',
+            'user',
+          );
+        } else {
+          notify(
+            'You have been demoted to viewer',
+            'info',
+            'user',
+          );
+        }
+      }
+    },
+  });
 
   return {
     approved,
